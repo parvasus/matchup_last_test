@@ -37,7 +37,7 @@ services:
     networks:
       - app-network
       
-  # 디비 조회용 GUI    
+  # DB 조회용 GUI
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
   #   links:
