@@ -72,8 +72,8 @@ class _ExerciseCameraScreenState extends State<ExerciseCameraScreen> {
       _channel = WebSocketChannel.connect(
         // 원격 서버 주소가 13.124.114.252로 설정되어 있는데,
         // localhost로 하던가 아니면 내 PC의 주소로 바꾸자 :192.168.35.91
-        // Uri.parse('ws://localhost:8000/api/v1/exercise/ws'),
-        Uri.parse('ws://13.124.114.252:8000/api/v1/exercise/ws'),
+        Uri.parse('ws://localhost:8000/api/v1/exercise/ws'),
+        //Uri.parse('ws://13.124.114.252:8000/api/v1/exercise/ws'),
         // Uri.parse('ws://10.254.3.138:8000/api/v1/exercise/ws'),
       );
 

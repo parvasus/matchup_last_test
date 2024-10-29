@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ApiClient {
+class ApiClient {// 집 35.91 학교 219.100
   final String baseUrl = 'http://192.168.35.91:8000/api/v1';
   // final String baseUrl = 'http://10.254.3.138:8000/api/v1';
 
