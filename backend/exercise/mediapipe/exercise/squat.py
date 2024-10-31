@@ -97,7 +97,7 @@ class SquatExercise:
             logger.error(f"Error in calculate_metrics: {e}")
             return {'error': str(e)}
 
-    def get_squat_coordinates():
+    def get_squat_coordinates(self):
         coordinates = [
             "LEFT_HIP",
             "RIGHT_HIP",

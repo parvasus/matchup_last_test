@@ -109,7 +109,7 @@ class LegExercise:
             logger.error(f"Error in calculate_metrics: {e}")
             return {'error': str(e)}
 
-    def get_lunge_coordinates():
+    def get_lunge_coordinates(self):
         coordinates = [
             "LEFT_HIP",
             "RIGHT_HIP",

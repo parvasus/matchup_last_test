@@ -130,7 +130,7 @@ class WaistExercise:
             return {'error': str(e)}
 
 
-    def get_waist_coordinates():
+    def get_waist_coordinates(self):
         coordinates = [
             "LEFT_SHOULDER",
             "RIGHT_SHOULDER",

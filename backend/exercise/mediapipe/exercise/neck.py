@@ -99,7 +99,7 @@ class NeckExercise:
             logger.error(f"Error in calculate_metrics: {e}")
             return {'error': str(e)}
 
-    def get_neck_coordinates():
+    def get_neck_coordinates(self):
         coordinates = [
             "NOSE",
             "LEFT_EYE",

@@ -15,19 +15,20 @@ from backend.database import get_db, get_current_user
 import logging
 from typing import List
 import pytz
-
+from backend.health.schemas import HealthBase, HealthCreate, HealthInDBBase
+import backend.models
 # 한국 시간대 설정
 kst = pytz.timezone('Asia/Seoul')
 
-from health.crud import (
+from backend.health.crud import (
     create_health_entry_in_db,
     submit_health_data,
     restore_health_data,
     download_image_from_s3,
     init_health_data
 )
-from health.schemas import HealthBase, HealthCreate, HealthInDBBase
-import models
+from backend.health.schemas import HealthBase, HealthCreate, HealthInDBBase
+import backend.models
 
 from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
 
