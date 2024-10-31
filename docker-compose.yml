@@ -32,35 +32,12 @@ services:
       - MYSQL_DATABASE=matchup  # 데이터베이스 이름을 여기에 입력해야 합니다.
       - MYSQL_USER=user # MySQL 사용자를 여기에 입력해야 합니다.
       - MYSQL_PASSWORD=12345678 # MySQL 사용자의 비밀번호를 여기에 입력해야 합니다.
+      - PYTHONPATH=/backend  # PYTHONPATH 설정 추가
     volumes:
       - db_data:/var/lib/mysql  # MySQL 데이터베이스를 위한 가상 볼륨 설정
     networks:
       - app-network
-      
-  # DB 조회용 GUI
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   links:
-  #     - db:mysql
-  #   ports:
-  #     - "8001:80"
-  #   environment:
-  #     PMA_HOST: db
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #   networks:
-  #     - app-network
-  
-  # 젠킨스
-  # jenkins:
-  #   image: jenkins/jenkins:latest
-  #   container_name: jenkins
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - jenkins_home:/var/jenkins_home
-  #   networks:
-  #     - app-network
+
 
   redis:
     image: redis:latest
@@ -78,20 +55,6 @@ services:
     restart: always
     networks:
       - app-network
-  
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80" # http
-  #     - '443:443' # https
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #     - ./nginx/error.log:/etc/log/nginx/error.log
-  #   container_name: nginx_proxy
-  #   networks:
-  #     - app-network
-  #   depends_on:
-  #     - backend
 
 networks:
   app-network:
