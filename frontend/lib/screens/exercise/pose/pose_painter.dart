@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
+// 좌표 변환 담당. 좌표를 계산 후 매핑하여 관절 연결하는데 씀
+// translateX, translateY
 import 'coordinates_translator.dart';
 
+// 좌표를 기반으로 관절 연결을 포함할 수 있는 렌더링이나 그리기를 처리
 class PosePainter extends CustomPainter {
   PosePainter(this.poses, this.absoluteImageSize, this.rotation);
 
@@ -55,7 +58,7 @@ class PosePainter extends CustomPainter {
             paintType);
       }
 
-      //Draw arms
+      // 팔 연결(어깨, 팔꿈치 | 팔꿈치, 손목 | 좌/우)
       paintLine(
           PoseLandmarkType.leftShoulder, PoseLandmarkType.leftElbow, leftPaint);
       paintLine(
@@ -65,13 +68,13 @@ class PosePainter extends CustomPainter {
       paintLine(
           PoseLandmarkType.rightElbow, PoseLandmarkType.rightWrist, rightPaint);
 
-      //Draw Body
+      // 몸 연결(어깨, 골반 | 좌/우)
       paintLine(
           PoseLandmarkType.leftShoulder, PoseLandmarkType.leftHip, leftPaint);
       paintLine(PoseLandmarkType.rightShoulder, PoseLandmarkType.rightHip,
           rightPaint);
 
-      //Draw legs
+      // 다리 연결(골반, 무릎 | 무릎 발목 | 좌/우)
       paintLine(PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
           PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle, leftPaint);
@@ -82,7 +85,7 @@ class PosePainter extends CustomPainter {
     }
   }
 
-  // 허리 좌표를 반환하는 함수
+  // 허리 좌표를 반환하는 함수 : getWaistCoordinates
   static List<Offset> getWaistCoordinates(List<Pose> poses) {
     final List<Offset> coordinates = [];
     for (final pose in poses) {
@@ -114,7 +117,7 @@ class PosePainter extends CustomPainter {
     return coordinates;
   }
 
-  // 스쿼트 운동(골반 운동)을 위한 좌표 반환 함수
+  // 스쿼트 운동(골반 운동)을 위한 좌표 반환 함수 : getSquatCoordinates
   static List<Offset> getSquatCoordinates(List<Pose> poses) {
     final List<Offset> coordinates = [];
     for (final pose in poses) {
@@ -158,7 +161,7 @@ class PosePainter extends CustomPainter {
     return coordinates;
   }
 
-   // 목 운동을 위한 좌표 반환 함수
+   // 목 운동을 위한 좌표 반환 함수 : getNeckCoordinates
   static List<Offset> getNeckCoordinates(List<Pose> poses) {
     final List<Offset> coordinates = [];
     for (final pose in poses) {
@@ -190,7 +193,7 @@ class PosePainter extends CustomPainter {
     return coordinates;
   }
 
-  // 런지 운동을 위한 좌표 반환 함수
+  // 런지 운동을 위한 좌표 반환 함수 : getLegCoordinates
   static List<Offset> getLegCoordinates(List<Pose> poses) {
     final List<Offset> coordinates = [];
     for (final pose in poses) {
