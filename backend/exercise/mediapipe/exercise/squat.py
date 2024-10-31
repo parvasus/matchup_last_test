@@ -78,7 +78,7 @@ class SquatExercise:
 
             if (left_angle > 160) and (right_angle > 160):
                 self.position = "down"
-            if (left_angle < 100) and (right_angle < 100) and (self.position == 'down'):
+            if (left_angle < 130) and (right_angle < 130) and (self.position == 'down'):
                 self.position = "up"
                 self.counter += 1
                 logger.info(f"횟수: {self.counter}")
