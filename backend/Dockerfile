@@ -7,6 +7,9 @@ COPY . /backend
 # 작업 디렉터리 설정
 WORKDIR /backend
 
+# Python이 백엔드 경로를 기본 경로로 인식도록 환경변수에 추가
+ENV PYTHONPATH=/backend
+
 # pip 업그레이드 및 의존성 설치
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
