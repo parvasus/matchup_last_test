@@ -262,8 +262,8 @@ async def websocket_endpoint(
 
                 # 점수 계산 및 저장
                 total_count = 5 * result_set + result_cnt if result_cnt != 5 else 5 * result_set
-                hw_weight = 0.7
-                mp_weight = 0.3
+                hw_weight = 0
+                mp_weight = 1
 
                 # 점수를 백분율로 계산
                 # final_score = 20 * (cur_mp_cnt * mp_weight + hw_count * hw_weight)
