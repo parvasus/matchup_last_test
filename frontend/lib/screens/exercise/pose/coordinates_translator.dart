@@ -16,7 +16,7 @@ double translateX(
       return x * size.width / absoluteImageSize.width;
   }
 }
-
+/*
 double translateY(
     double y, InputImageRotation rotation, Size size, Size absoluteImageSize) {
   switch (rotation) {
@@ -29,5 +29,31 @@ double translateY(
     default:
       return y * size.height / absoluteImageSize.height;
   }
+}*/
+
+//  상하 반전 때문에 추가함
+double translateY(
+    double y, InputImageRotation rotation, Size size, Size absoluteImageSize, {bool isFlippedVertically = false}) {
+  double translatedY;
+  switch (rotation) {
+    case InputImageRotation.rotation90deg:
+      translatedY = y * size.height / absoluteImageSize.width;
+      break;
+    case InputImageRotation.rotation270deg:
+      translatedY = size.height - (y * size.height / absoluteImageSize.width);
+      break;
+    case InputImageRotation.rotation180deg:
+      translatedY = size.height - (y * size.height / absoluteImageSize.height);
+      break;
+    default:
+      translatedY = y * size.height / absoluteImageSize.height;
+  }
+
+  // 상하 반전 적용
+  if (isFlippedVertically) {
+    translatedY = size.height - translatedY;
+  }
+
+  return translatedY;
 }
 
