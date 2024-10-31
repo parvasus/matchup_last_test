@@ -4,11 +4,13 @@ from fastapi_another_jwt_auth import AuthJWT
 from sqlalchemy.orm import Session
 import pytz
 import redis
-import models  # 데이터베이스 모델 임포트
-from models import Session as SessionModel  # 데이터베이스 모델의 Session 클래스 임포트
-from session.crud import create_session, get_latest_session_by_user_and_exercise
-from user.crud import authenticate_access_token, get_user, get_user_id_by_username
-from exercise.schemas import SessionScore, FinalScoreResponse
+import backend.models  # 데이터베이스 모델 임포트
+from backend.models import Session as SessionModel  # 데이터베이스 모델의 Session 클래스 임포트
+from backend.session.crud import create_session, get_latest_session_by_user_and_exercise
+
+from backend.user.crud import authenticate_access_token, get_user, get_user_id_by_username
+from backend.exercise.schemas import SessionScore, FinalScoreResponse
+
 from logger import logger
 from template import html
 import json
