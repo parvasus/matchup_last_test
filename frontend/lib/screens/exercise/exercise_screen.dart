@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// 이건 bottom에서 자동 설정됨
+// import '../bottom_navigation_bar.dart';
 import 'neck.dart'; 
 import 'hip.dart';
 import 'waist.dart';

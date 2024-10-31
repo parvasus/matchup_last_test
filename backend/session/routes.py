@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
-from session import schemas, crud
+from backend.session import schemas, crud
 from sqlalchemy.orm import Session
-from database import get_db
+from backend.database import get_db
 import logging
-from database import get_current_user
-from health.routes import get_auth_header
-from auth import AuthJWT
-from session.crud import get_sessions_by_user_id
+from backend.database import get_current_user
+from backend.health.routes import get_auth_header
+from backend.auth import AuthJWT
+from backend.session.crud import get_sessions_by_user_id
 from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
 from typing import List
 

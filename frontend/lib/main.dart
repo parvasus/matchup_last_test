@@ -8,6 +8,11 @@ import 'screens/login/login_screen.dart';
 import 'screens/bottom_navigation_bar.dart';
 import 'models/UserProvider.dart';
 
+// 테스트용 링크
+import 'screens/calendar/calendar_screen.dart';
+import 'screens/exercise/exercise_screen.dart';
+import 'screens/grade/grade_screen.dart';
+
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
@@ -29,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MobiMove!',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -36,11 +42,16 @@ class MyApp extends StatelessWidget {
         builder: (context, userProvider, child) {
           return userProvider.isLoggedIn
               ? BottomNavBar(accessToken: userProvider.accessToken ?? '')
-              : LoginScreen();
+              : ExerciseScreen();
         },
       ),
     );
   }
 }
 
+// 목록 확인용
+// 기본(로그인 화면) :  LoginScreen
+// 캘린더           : CalendarScreen
+// 운동 목록        : ExerciseScreen
+// 랭킹             : GradeScreen
 

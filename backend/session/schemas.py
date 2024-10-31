@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
-from models import Exercise
+from backend.models import Exercise
 
 class SessionBase(BaseModel):
     exercise_id: int

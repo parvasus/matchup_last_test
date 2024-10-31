@@ -1,7 +1,7 @@
 from fastapi import WebSocket
 import asyncio
 import numpy as np
-from logger import logger
+from backend.logger import logger
 import cv2
 import base64
 import json

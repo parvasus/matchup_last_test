@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from logger import logger
+from backend.logger import logger
 import csv
 import pytz
 import datetime

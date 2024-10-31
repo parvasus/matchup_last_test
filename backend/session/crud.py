@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from datetime import datetime
-import models
-from models import Session as SessionModel  # 데이터베이스 모델의 Session 클래스 임포트
+import backend.models
+from backend.models import Session as SessionModel  # 데이터베이스 모델의 Session 클래스 임포트
 
 def create_session(db: Session, user_id: int, exercise_id: int, date: datetime):
     new_session = SessionModel(user_id=user_id, exercise_id=exercise_id, date=date)

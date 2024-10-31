@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
-from health import schemas
+from backend.health import schemas
 import requests
-from models import Health
+from backend.models import Health
 from typing import List
 import logging
 import numpy as np

@@ -1,3 +1,4 @@
+/* 임시 : 공간 채우는 용도 : 랭킹+점수 스크린 화면임
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -53,7 +54,7 @@ class _GradeScreenState extends State<GradeScreen> {
                 return Text("Error: ${snapshot.error}");
               } else {
                 var exerciseScores =
-                    snapshot.data as Map<int, List<SessionScore>>?;
+                snapshot.data as Map<int, List<SessionScore>>?;
                 return Column(
                   children: <Widget>[
                     TabBar(
@@ -99,7 +100,7 @@ class _GradeScreenState extends State<GradeScreen> {
             title: Text('No data available',
                 style: TextStyle(fontSize: screenWidth * 0.045)),
             subtitle:
-                Text('점수: 0', style: TextStyle(fontSize: screenWidth * 0.035)),
+            Text('점수: 0', style: TextStyle(fontSize: screenWidth * 0.035)),
           );
         }
         return ListTile(
@@ -152,3 +153,4 @@ class SessionScore {
     return DateFormat('yyyy-MM-dd HH:mm').format(parsedDate);
   }
 }
+*/

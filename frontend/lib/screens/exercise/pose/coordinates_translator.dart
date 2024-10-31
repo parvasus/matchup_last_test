@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io'; // Flutter 앱이 로컬 파일 시스템, 소켓 통신, HTTP 클라이언트 및 서버, 프로세스 관리 등 다양한 I/O 작업을 수행
+
 import 'dart:ui';
 
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';

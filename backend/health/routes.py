@@ -8,10 +8,10 @@ import numpy as np
 import os
 from datetime import datetime, timezone
 from botocore.exceptions import NoCredentialsError, ClientError
-from database import get_db
+from backend.atabase import get_db
 import dotenv
-from health import crud, schemas, front, side
-from database import get_db, get_current_user
+from backend.health import crud, schemas, front, side
+from backend.database import get_db, get_current_user
 import logging
 from typing import List
 import pytz
