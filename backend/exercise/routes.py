@@ -11,16 +11,16 @@ from backend.session.crud import create_session, get_latest_session_by_user_and_
 from backend.user.crud import authenticate_access_token, get_user, get_user_id_by_username
 from backend.exercise.schemas import SessionScore, FinalScoreResponse
 
-from logger import logger
-from template import html
+from backend.logger import logger
+from backend.template import html
 import json
 import asyncio
 from typing import List
-from exercise.mediapipe.exercise.waist import WaistExercise
-from exercise.mediapipe.exercise.squat import SquatExercise
-from exercise.mediapipe.exercise.leg import LegExercise
-from exercise.mediapipe.exercise.neck import NeckExercise
-from database import get_db
+from backend.exercise.mediapipe.exercise.waist import WaistExercise
+from backend.exercise.mediapipe.exercise.squat import SquatExercise
+from backend.exercise.mediapipe.exercise.leg import LegExercise
+from backend.exercise.mediapipe.exercise.neck import NeckExercise
+from backend.database import get_db
 import csv
 import datetime as dt
 from datetime import datetime
