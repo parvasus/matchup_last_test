@@ -10,6 +10,7 @@ from backend.logger import logger
 from backend.database import get_db
 from backend.auth import AuthJWT
 
+
 router = APIRouter(
     prefix="/api/v1/user",
     tags=["user"],
