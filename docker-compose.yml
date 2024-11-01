@@ -19,6 +19,8 @@ services:
       - JWT_ALGORITHM=HS256
       - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=3000
       - JWT_REFRESH_TOKEN_EXPIRE_DAYS=5
+      - PYTHONPATH=/backend  # PYTHONPATH 설정 추가
+
     networks:
       - app-network
 
@@ -32,7 +34,6 @@ services:
       - MYSQL_DATABASE=matchup  # 데이터베이스 이름을 여기에 입력해야 합니다.
       - MYSQL_USER=user # MySQL 사용자를 여기에 입력해야 합니다.
       - MYSQL_PASSWORD=12345678 # MySQL 사용자의 비밀번호를 여기에 입력해야 합니다.
-      - PYTHONPATH=/backend  # PYTHONPATH 설정 추가
     volumes:
       - db_data:/var/lib/mysql  # MySQL 데이터베이스를 위한 가상 볼륨 설정
     networks:
