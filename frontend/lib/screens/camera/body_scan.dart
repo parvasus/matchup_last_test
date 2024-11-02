@@ -39,7 +39,7 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
     _cameras = await availableCameras();
     _controller = CameraController(
       _cameras.firstWhere(
-          (camera) => camera.lensDirection == CameraLensDirection.front),
+              (camera) => camera.lensDirection == CameraLensDirection.front),
       ResolutionPreset.max,
       enableAudio: false,
     );
@@ -60,16 +60,19 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
       final XFile file = await _controller.takePicture();
       final Directory directory = await getApplicationDocumentsDirectory();
       final String imagePath =
-          join(directory.path, 'Photo_${DateTime.now()}.jpg');
-      await File(file.path).copy(imagePath);    // 캡처된 사진을 지정된 경로에 저장
+      join(directory.path, 'Photo_${DateTime.now()}.jpg');
+      await File(file.path).copy(imagePath); // 캡처된 사진을 지정된 경로에 저장
+
       setState(() {
-        _photoCount++;        // 촬영된 사진 수 업데이트
+        _photoCount++; // 촬영된 사진 수 업데이트
       });
+
       print('$imagePath : Capture Success!!!'); // 캡처 성공 시 메시지 출력
 
-      await _uploadImage(File(imagePath));      // 저장한 이미지를 서버로 업로드
+      await _uploadImage(File(imagePath)); // 저장한 이미지를 서버로 업로드
     } catch (e) {
-      print('Error taking picture: $e');        // 오류 발생 시 에러 메시지 출력
+      print('Error taking picture: $e'); // 오류 발생 시 에러 메시지 출력
+      showErrorDialog("사진 저장 중 오류가 발생했습니다. 다시 시도해 주세요."); // 오류 시 경고 표시
     }
   }
 
@@ -101,13 +104,33 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
         } else {
           print('Failed to upload image. Status code: ${response.statusCode}');
           print('Response body: $respStr');
+          showErrorDialog("이미지 업로드 실패: 서버 연결을 확인해 주세요.");
         }
       } else {
         print('Token is null');
+        showErrorDialog("인증 토큰이 없습니다. 다시 로그인해 주세요.");
       }
     } catch (e) {
       print('Error occurred: $e');
+      showErrorDialog("서버 연결 실패: 다시 시도해 주세요.");
     }
+  }
+
+  // 서버 연결 실패 경고를 표시하는 함수
+  void showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("연결 오류"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text("확인"),
+          ),
+        ],
+      ),
+    );
   }
 
   // 카운트다운을 시작하는 함수 (3초 남았을 때 캡처 실행)
@@ -120,7 +143,6 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
           } else { // 0초에 시간 끄고, 사진 찍고
             _timer.cancel();
             takePicture();
-            // 2번 반복하는거 취소함
           }
         });
       } else {
@@ -160,7 +182,7 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
     return Stack(
       children: [
         Positioned.fill(
-          child: CameraPreview(_controller),// 카메라 미리보기 출력
+          child: CameraPreview(_controller), // 카메라 미리보기 출력
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -219,6 +241,34 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+// 캡처된 이미지를 표시하는 화면
+class CapturedImageScreen extends StatelessWidget {
+  final String imagePath;
+
+  const CapturedImageScreen({Key? key, required this.imagePath})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("측정 결과")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.file(File(imagePath)), // 캡처된 이미지 표시
+          SizedBox(height: 20),
+          Text(
+            "추천 운동을 곧 소개합니다.",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ), // 추천 운동 소개 섹션 (현재는 텍스트로 표시)
+          SizedBox(height: 20),
+          // 여기에 추천 운동 목록 또는 관련 콘텐츠 추가 가능
+        ],
+      ),
     );
   }
 }
