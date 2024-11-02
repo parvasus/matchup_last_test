@@ -10,7 +10,7 @@ import 'models/UserProvider.dart';
 
 // 테스트용 링크
 //import 'screens/calendar/calendar_screen.dart';
-//import 'screens/exercise/exercise_screen.dart';
+import 'screens/exercise/exercise_screen.dart';
 //import 'screens/grade/grade_screen.dart';
 
 List<CameraDescription> cameras = [];
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         builder: (context, userProvider, child) {
           return userProvider.isLoggedIn
               ? BottomNavBar(accessToken: userProvider.accessToken ?? '')
-              : LoginScreen();
+              : ExerciseScreen();
         },
       ),
     );

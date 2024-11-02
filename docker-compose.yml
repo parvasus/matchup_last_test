@@ -1,4 +1,5 @@
-version: '3.8'
+# 버전은 필요 없대
+version: '3.10'
 
 services:
   # FastAPI 백엔드 애플리케이션

@@ -9,6 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:provider/provider.dart';
 import '/models/UserProvider.dart'; // 수정된 경로
 
+// 35.3 | 35.91
 final String baseUrl = 'http://192.168.35.91:8000/api/v1';
 // final String baseUrl = 'http://10.254.3.138:8000/api/v1';
 
