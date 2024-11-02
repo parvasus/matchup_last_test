@@ -2,7 +2,7 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi_another_jwt_auth import AuthJWT
 
-from .schemas import UserProfileUpdate, UserBase
+from backend.user.schemas import UserProfileUpdate, UserBase
 from backend.models import User, Health
 from backend.logger import logger
 from datetime import timedelta

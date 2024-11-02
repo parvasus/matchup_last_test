@@ -1,11 +1,11 @@
 # 기본 이미지로 Python 3.10 사용
 FROM python:3.10
 
-# 현재 디렉터리의 모든 파일을 컨테이너의 /backend 디렉터리로 복사
-COPY . /backend
-
 # 작업 디렉터리 설정
 WORKDIR /backend
+
+# 현재 디렉터리의 모든 파일을 컨테이너의 /backend 디렉터리로 복사
+COPY . /backend
 
 # Python이 백엔드 경로를 기본 경로로 인식도록 환경변수에 추가
 # 이전 버전 But,

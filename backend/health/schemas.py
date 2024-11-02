@@ -7,7 +7,6 @@ class HealthBase(BaseModel):
     leg: int
     pelvis: int
     neck: int
-    side_url : str
     front_url : str
     need: int
 
@@ -48,7 +47,6 @@ class HealthLimited(BaseModel):
 
 class HealthImage(BaseModel):
     front_url: str
-    side_url: str
     createdAt: datetime
 
     class Config:

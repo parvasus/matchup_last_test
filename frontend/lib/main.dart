@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         builder: (context, userProvider, child) {
           return userProvider.isLoggedIn
               ? BottomNavBar(accessToken: userProvider.accessToken ?? '')
-              : CameraScreen();
+              : ExerciseScreen();
         },
       ),
     );

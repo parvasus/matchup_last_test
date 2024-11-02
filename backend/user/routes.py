@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from fastapi.security import HTTPBearer
 from datetime import datetime
 
-from .crud import get_user, create_user, create_tokens_in_body, authenticate_access_token, authenticate_refresh_token, authenticate_user, update_user_profile, init_health
-from .schemas import Token,UserProfileUpdate, UserBase
+from backend.user.crud import get_user, create_user, create_tokens_in_body, authenticate_access_token, authenticate_refresh_token, authenticate_user, update_user_profile, init_health
+from backend.user.schemas import Token,UserProfileUpdate, UserBase
 from backend.logger import logger
 from backend.database import get_db
 from backend.auth import AuthJWT
@@ -162,100 +162,3 @@ async def update_profile(
 
     return JSONResponse(content={"message": "Profile updated successfully", "email": email}, status_code=200)
 
-# @router.post("/profile", summary="내 정보 입력")
-# async def create_profile(
-#                 height: int = Form(..., description="키"),
-#                 weight: int = Form(..., description="몸무게"),
-#                 waist: int = Form(..., description="허리"),
-#                 leg: int = Form(..., description="다리"),
-#                 pelvis: int = Form(..., description="골반"),
-#                 neck: int = Form(..., description="목"),
-#                 db: Session = Depends(get_db),
-#                 Authorize: AuthJWT = Depends(),
-#                 ):
-#     """
-#         사용자 프로필 생성
-#     """
-#     email = authenticate_access_token(Authorize=Authorize)
-#     user = get_user(db, email=email)
-#     if not user:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="유저 정보가 없습니다.",
-#         )
-#     userForm = HealthBase(user_id=user.id, height=height, weight=weight, waist=waist, leg=leg, pelvis=pelvis, neck=neck, need=0)
-#     result = create_health(db, userForm)
-#     logger.info(result)
-#     if result != True:
-#         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail=result)
-#     logger.info(f"프로필 생성 완료 {email}")
-#     return JSONResponse(content={"message": "프로필 생성 완료", "email": email}, status_code=201)
-
-
-# @router.get("/profile", summary="내 정보 조회")
-# async def get_profile(
-#                 Authorize: AuthJWT = Depends(),
-#                 db: Session = Depends(get_db)
-#             ):
-#     """
-#         사용자 프로필 조회
-#     """
-#     email = authenticate_access_token(Authorize=Authorize)
-#     heath = get_health(db, email)
-#     health_response = HealthBase(user_id=heath.user_id, height=heath.height, weight=heath.weight, waist=heath.waist, leg=heath.leg, pelvis=heath.pelvis, neck=heath.neck, need=heath.need)
-#     if not heath:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="유저 프로필 정보가 없습니다.",
-#         )
-#     return JSONResponse(content=health_response.model_dump(), status_code=200)
-
-# @router.put("/profile", summary="내 정보 업데이트")
-# async def update_profile(
-#                 height: int = Form(..., description="키"),
-#                 weight: int = Form(..., description="몸무게"),
-#                 waist: int = Form(..., description="허리"),
-#                 leg: int = Form(..., description="다리"),
-#                 pelvis: int = Form(..., description="골반"),
-#                 neck: int = Form(..., description="목"),
-#                 Authorize: AuthJWT = Depends(),
-#                 db: Session = Depends(get_db),
-#                 ):
-#     """
-#         사용자 프로필 수정
-#     """
-#     email = authenticate_access_token(Authorize=Authorize)
-#     result = update_health(db, email, {"height": height, "weight": weight, "waist": waist, "leg": leg, "pelvis": pelvis, "neck": neck})
-#     if not result:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="프로필 정보가 없습니다.",
-#         )
-#     return JSONResponse(content={"message": "프로필 수정 완료", "email": email}, status_code=200)
-
-
-# @router.post("/profile", summary="내 정보 입력")
-# async def create_profile(
-#                 nickname: str = Form(..., description="User nickname"),
-#                 height: int = Form(..., description="키"),
-#                 weight: int = Form(..., description="몸무게"),
-#                 db: Session = Depends(get_db),
-#                 Authorize: AuthJWT = Depends(),
-#                 ):
-#     """
-#         사용자 프로필 생성
-#     """
-#     email = authenticate_access_token(Authorize=Authorize)
-#     user = get_user(db, email=email)
-#     if not user:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="유저 정보가 없습니다.",
-#         )
-#     userForm = HealthBase(user_id=user.id, nickname=nickname, height=height, weight=weight)
-#     result = create_health(db, userForm)
-#     logger.info(result)
-#     if result != True:
-#         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail=result)
-#     logger.info(f"프로필 생성 완료 {email}")
-#     return JSONResponse(content={"message": "프로필 생성 완료", "email": email}, status_code=201)
