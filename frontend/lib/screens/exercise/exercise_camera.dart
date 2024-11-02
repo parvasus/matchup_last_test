@@ -25,7 +25,7 @@ class ExerciseCameraScreen extends StatefulWidget {
 class _ExerciseCameraScreenState extends State<ExerciseCameraScreen> {
   late Timer _timer;
   late Timer _coordinateTimer;
-  int _remainingTime = 10;  // 10초 후에 운동 시작되도록 타이머 설정
+  int _remainingTime = 10;  // 10초 후에 운동 시작되도록 타이머 설정 : 10초쯤 되야 그냥 넘겨도 TTS가 끝남
   bool _isExercising = false;
   late WebSocketChannel _channel;
   List<Pose> _detectedPoses = [];
