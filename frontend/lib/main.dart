@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-// import 'package:matchup/screens/exercise/score_modal.dart';
+import 'package:matchup/screens/exercise/score_modal.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:camera/camera.dart';
-import 'screens/login/login_screen.dart';
 import 'screens/bottom_navigation_bar.dart';
 import 'models/UserProvider.dart';
+
+import 'screens/login/login_screen.dart';
+
+// 테스트 용도
+import 'screens/camera/camera_screen.dart';
+
 
 // 테스트용 링크
 //import 'screens/calendar/calendar_screen.dart';
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
         builder: (context, userProvider, child) {
           return userProvider.isLoggedIn
               ? BottomNavBar(accessToken: userProvider.accessToken ?? '')
-              : ExerciseScreen();
+              : CameraScreen();
         },
       ),
     );
@@ -54,4 +59,4 @@ class MyApp extends StatelessWidget {
 // 캘린더           : CalendarScreen
 // 운동 목록        : ExerciseScreen
 // 랭킹             : GradeScreen
-
+// 메인 화면        : CameraScreen
