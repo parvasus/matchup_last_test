@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 from datetime import datetime, timedelta
-from backend.configs import JWT_ALGORITHM, JWT_SECRET_KET, JWT_ACCESS_EXPIRE_MINUTES, JWT_REFRESH_EXPIRE_DAYS
+from backend.configs import JWT_ALGORITHM, JWT_SECRET_KEY, JWT_ACCESS_EXPIRE_MINUTES, JWT_REFRESH_EXPIRE_DAYS
 
 class Token(BaseModel):
     access_token: str
     refresh_token: str
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = JWT_SECRET_KET
+    authjwt_secret_key: str = JWT_SECRET_KEY
     access_expires: int = timedelta(minutes=JWT_ACCESS_EXPIRE_MINUTES)
     refresh_expires: int = timedelta(days=JWT_REFRESH_EXPIRE_DAYS)
     authjwt_token_location: set = {"headers"}

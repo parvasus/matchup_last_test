@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
-from typing import List
+from typing import Optional,  List
 
 class HealthBase(BaseModel):
     waist: int

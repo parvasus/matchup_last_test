@@ -6,7 +6,7 @@ from .schemas import UserProfileUpdate, UserBase
 from backend.models import User, Health
 from backend.logger import logger
 from datetime import timedelta
-from backend.configs import JWT_ACCESS_EXPIRE_MINUTES, JWT_SECRET_KET
+from backend.configs import JWT_ACCESS_EXPIRE_MINUTES, JWT_SECRET_KEY
 import random
 import string
 import jwt
@@ -75,7 +75,7 @@ def authenticate_access_token(access_token: str, Authorize: AuthJWT) -> str:
 
 def decode_jwt(token: str):
     try:
-        decoded_token = jwt.decode(token, JWT_SECRET_KET, algorithms=["HS256"])
+        decoded_token = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
         return decoded_token if decoded_token["exp"] >= time.time() else None
     except Exception as e:
         logger.error(f"Token decoding error: {e}")
