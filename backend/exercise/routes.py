@@ -7,10 +7,8 @@ import redis
 import backend.models  # 데이터베이스 모델 임포트
 from backend.models import Session as SessionModel  # 데이터베이스 모델의 Session 클래스 임포트
 from backend.session.crud import create_session, get_latest_session_by_user_and_exercise
-
 from backend.user.crud import authenticate_access_token, get_user, get_user_id_by_username
 from backend.exercise.schemas import SessionScore, FinalScoreResponse
-
 from backend.logger import logger
 from backend.template import html
 import json
@@ -43,8 +41,8 @@ async def get():
 
 @router.get("/scores", response_model=List[SessionScore])
 async def get_all_scores(
-    Authorize: AuthJWT = Depends(),
-    db: Session = Depends(get_db)
+        Authorize: AuthJWT = Depends(),
+        db: Session = Depends(get_db)
 ):
     Authorize.jwt_required()
     current_user = Authorize.get_jwt_subject()
@@ -68,9 +66,9 @@ async def get_all_scores(
 # 최종 점수 조회 엔드포인트 수정
 @router.get("/session/{session_id:int}/final_score", summary="최종 점수 조회", response_model=FinalScoreResponse)
 async def get_final_score(
-    session_id: int, 
-    Authorize: AuthJWT = Depends(), 
-    db: Session = Depends(get_db)
+        session_id: int,
+        Authorize: AuthJWT = Depends(),
+        db: Session = Depends(get_db)
 ):
     logger.info(f"Received request to get final score for session ID: {session_id}")
 
@@ -100,22 +98,22 @@ async def get_final_score(
     return FinalScoreResponse(session_id=session_id, final_score=final_score)
 
 ## Hardware 전용
-@router.get("/{exercise_id}/user/{nickname}", summary="닉네임과 운동 아이디로 세션 ID 조회")
-async def get_session_id_by_nickname(exercise_id: int, nickname: str, db: Session = Depends(get_db)):
-    logger.info(f"Received request to get session ID for exercise ID: {exercise_id} and nickname: {nickname}")
+# @router.get("/{exercise_id}/user/{nickname}", summary="닉네임과 운동 아이디로 세션 ID 조회")
+# async def get_session_id_by_nickname(exercise_id: int, nickname: str, db: Session = Depends(get_db)):
+#     logger.info(f"Received request to get session ID for exercise ID: {exercise_id} and nickname: {nickname}")
 
-    user_id = get_user_id_by_username(db, nickname)
-    logger.info(f"User ID: {user_id}")
-    if not user_id:
-        logger.error(f"User not found for nickname: {nickname}")
-        raise HTTPException(status_code=404, detail="User not found")
+#     user_id = get_user_id_by_username(db, nickname)
+#     logger.info(f"User ID: {user_id}")
+#     if not user_id:
+#         logger.error(f"User not found for nickname: {nickname}")
+#         raise HTTPException(status_code=404, detail="User not found")
 
-    session = get_latest_session_by_user_and_exercise(db, user_id, exercise_id)
-    logger.info(f"Session: {session}")
-    if not session:
-        logger.error(f"Session not found for exercise ID: {exercise_id} and user ID: {user_id}")
-        raise HTTPException(status_code=404, detail="Session not found")
-    return session.id
+#     session = get_latest_session_by_user_and_exercise(db, user_id, exercise_id)
+#     logger.info(f"Session: {session}")
+#     if not session:
+#         logger.error(f"Session not found for exercise ID: {exercise_id} and user ID: {user_id}")
+#         raise HTTPException(status_code=404, detail="Session not found")
+#     return session.id
 
 @router.get("/session/{session_id}/count/{count}/hw", summary="HW 카운트 갱신")
 async def get_counts(session_id: int, count: int):
@@ -124,17 +122,47 @@ async def get_counts(session_id: int, count: int):
 
     if count < 5:
         rc.set(f"{session_id}_hw_count", count)
-        return "keep"
+        status = "keep"
     elif count >= 5 and hw_set < 2:
         hw_set += 1
         rc.set(f"{session_id}_hw_set", hw_set)
-        return "set"
+        status = "set"
     else:
         if hw_set == 2:
             rc.set(f"{session_id}_hw_count", count)
-            return "end"
-    return {session_id, count}
+            status = "end"
 
+    # 기록할 데이터 준비
+    ex_data = {
+        session_id: [{"count": count, "status": status}]
+    }
+    write_exercise(ex_data)
+
+    return status
+
+# @router.get("/session/{session_id}/count/{count}/hw", summary="HW 카운트 갱신")
+# async def get_counts(session_id: int, count: int):
+#     hw_set = int(rc.get(f"{session_id}_hw_set")) if rc.get(f"{session_id}_hw_set") is not None else 0
+
+#     if count < 5:
+#         rc.set(f"{session_id}_hw_count", count)
+#         status = "keep"
+#     elif count >= 5 and hw_set < 2:
+#         hw_set += 1
+#         rc.set(f"{session_id}_hw_set", hw_set)
+#         status = "set"
+#     else:
+#         if hw_set == 2:
+#             rc.set(f"{session_id}_hw_count", count)
+#             status = "end"
+
+#     # 기록할 데이터 준비
+#     ex_data = {
+#         session_id: [{"count": count, "status": status}]
+#     }
+#     write_exercise(ex_data)
+
+#     return status
 
 def write_exercise(ex_data):
     fieldnames = set()
@@ -155,31 +183,6 @@ def write_exercise(ex_data):
                 row.update(entry)
                 writer.writerow(row)
 
-@router.get("/session/{session_id}/count/{count}/hw", summary="HW 카운트 갱신")
-async def get_counts(session_id: int, count: int):
-    hw_set = int(rc.get(f"{session_id}_hw_set")) if rc.get(f"{session_id}_hw_set") is not None else 0
-
-    if count < 5:
-        rc.set(f"{session_id}_hw_count", count)
-        status = "keep"
-    elif count >= 5 and hw_set < 2:
-        hw_set += 1
-        rc.set(f"{session_id}_hw_set", hw_set)
-        status = "set"
-    else:
-        if hw_set == 2:
-            rc.set(f"{session_id}_hw_count", count)
-            status = "end"
-    
-    # 기록할 데이터 준비
-    ex_data = {
-        session_id: [{"count": count, "status": status}]
-    }
-    write_exercise(ex_data)
-
-    return status
-
-
 @router.websocket("/test")
 async def websocket_endpoint(websocket: WebSocket):
     logger.info("test1")
@@ -188,10 +191,10 @@ async def websocket_endpoint(websocket: WebSocket):
 ## 미디어 파이프 전용
 @router.websocket("/ws")
 async def websocket_endpoint(
-    websocket: WebSocket,
-    background_tasks: BackgroundTasks,
-    Authorize: AuthJWT = Depends(),
-    db: Session = Depends(get_db),
+        websocket: WebSocket,
+        background_tasks: BackgroundTasks,
+        Authorize: AuthJWT = Depends(),
+        db: Session = Depends(get_db),
 ):
     await websocket.accept()
     background_tasks.add_task(keep_websocket_alive, websocket)
@@ -232,8 +235,8 @@ async def websocket_endpoint(
                     logger.error(f"Error in calculate_metrics: {e}")
                     continue
 
-                hw_count = int(rc.get(f"{session_id}_hw_count") or 0)
-                hw_set = int(rc.get(f"{session_id}_hw_set") or 0)
+                # hw_count = int(rc.get(f"{session_id}_hw_count") or 0)
+                # hw_set = int(rc.get(f"{session_id}_hw_set") or 0)
                 mp_cnt = int(rc.get(f"{session_id}_mp_count") or 0)
                 mp_set = int(rc.get(f"{session_id}_mp_set") or 0)
 
@@ -242,13 +245,13 @@ async def websocket_endpoint(
 
                 logger.info(f"Previous count: {mp_cnt}, Current count: {cur_mp_cnt}")
                 logger.info(f"Previous set: {mp_set}, Current set: {cur_mp_set}")
-                logger.info(f"Hardware count: {hw_count}, Hardware set: {hw_set}")
-                
+                # logger.info(f"Hardware count: {hw_count}, Hardware set: {hw_set}")
+
                 # 세트와 카운트 값이 변경되었을 때만 업데이트
                 if cur_mp_set != mp_set:
                     rc.set(f"{session_id}_mp_set", cur_mp_set)
                     result_set = max(cur_mp_set, mp_set)
-                    result_cnt = 0  
+                    result_cnt = 0
                     logger.info(f"Set updated: {result_set}")
 
                 ## 카운트 값이 변경되었을 때만 업데이트
@@ -259,30 +262,26 @@ async def websocket_endpoint(
                     result_cnt = max(mp_cnt, cur_mp_cnt)
                     logger.info(f"Count updated: {result_cnt}")
 
-                result_cnt = max(cur_mp_cnt, hw_count)
-                result_set = max(cur_mp_set, hw_set)
+                # result_cnt = max(cur_mp_cnt, hw_count)
+                result_set = max(cur_mp_set, 0)  # 하드웨어 세트 값 제거
 
                 # 점수 계산 및 저장
                 total_count = 5 * result_set + result_cnt if result_cnt != 5 else 5 * result_set
-                hw_weight = 0 # 하드웨어 적용 안함. 가중치 0으로 수정
+                hw_weight = 0  # 하드웨어 가중치 0으로 수정
                 mp_weight = 1
 
                 # 점수를 백분율로 계산
-                # final_score = 20 * (cur_mp_cnt * mp_weight + hw_count * hw_weight)
-                # logger.info(f"Final Score: {final_score}%")
-                
-                # 점수를 백분율로 계산
-                def get_final_score(cur_mp_cnt, hw_count, exercise_id):
+                def get_final_score(cur_mp_cnt, exercise_id):
                     if exercise_id == 1 or exercise_id == 4:
                         return 20 * cur_mp_cnt
                     elif exercise_id == 2 or exercise_id == 3:
-                        return 20 * (cur_mp_cnt * mp_weight + hw_count * hw_weight)
-                
-                # 기존 코드    
-                # final_score = 20 * (cur_mp_cnt * mp_weight + hw_count * hw_weight)
-                
+                        return 20 * (cur_mp_cnt * mp_weight)
+
+                # 기존 코드
+                # final_score = 20 * (cur_mp_cnt * mp_weight)
+
                 # 변경된 코드
-                final_score = get_final_score(cur_mp_cnt, hw_count, exercise_id)
+                final_score = get_final_score(cur_mp_cnt, exercise_id)
 
                 if result_set == 2 and result_cnt == 4:
                     rc.set(f"{session_id}_final_score", final_score)
@@ -292,7 +291,7 @@ async def websocket_endpoint(
                     await websocket.send_json({"final_score": final_score, "total_count": total_count})
                     # await websocket.close()
                     break
-                else :
+                else:
                     logger.info(f"Final counts - result_cnt: {result_cnt}, result_set: {result_set}")
 
                     # 비교 후 최종 카운트와 세트 전송
@@ -302,7 +301,7 @@ async def websocket_endpoint(
                     else:
                         metrics.update({'counter': 0})
                         metrics.update({'sets': result_set})
-                    
+
                     logger.info(f"Sending metrics: {metrics}")
                     await websocket.send_json(metrics)
         await websocket.close()

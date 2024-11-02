@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from botocore.exceptions import NoCredentialsError, ClientError
 from backend.database import get_db
 import dotenv
-from backend.health import crud, schemas, front, side
+from backend.health import crud, schemas, front
 from backend.database import get_db, get_current_user
 import logging
 from typing import List
@@ -128,12 +128,8 @@ async def create_upload_file(
             file_path = f"{image_base_path}/front.png"
             cv2.imwrite(file_path, image)
             score_dict = front.process_image(file_path)
-        # False인 경우, side
-        else:
-            logging.info("Processing side image")
-            file_path = f"{image_base_path}/side.png"
-            cv2.imwrite(file_path, image)
-            score_dict = side.analyze_neck_angle(file_path)
+        # False인 경우, side -> 삭제함
+
             
         # None인 경우, 에러 발생
         if score_dict is None:
