@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // 이건 bottom에서 자동 설정됨
 // import '../bottom_navigation_bar.dart';
-import 'neck.dart'; 
 import 'hip.dart';
 import 'waist.dart';
 import 'leg.dart';
@@ -17,14 +16,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        ExerciseCard(
-          title: '목 스트레칭',
-          sets: '3 sets',
-          reps: '5 reps',
-          onTap: () {
-            _navigateToScreen(NeckStretchScreen());
-          },
-        ),
         ExerciseCard(
           title: '스쿼트',
           sets: '3 sets',
