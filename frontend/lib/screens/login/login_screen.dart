@@ -25,15 +25,41 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // 로고 이미지
-              SizedBox(height: screenHeight * 0.1),
-              Image.asset('lib/assets/images/logo.jpg', height: screenHeight * 0.2, fit: BoxFit.contain),
-              SizedBox(height: screenHeight * 0.03),
 
-              Text(
-                'Mobi-Move!',
-                style: TextStyle(fontSize: screenWidth * 0.1, fontFamily: "Timmana", fontWeight: FontWeight.w300),
+              // 로고 이미지
+              SizedBox(
+                height: screenHeight * 0.4,  // 고정된 높이
+                child: Image.asset(
+                  'lib/assets/images/logo.png',
+                  fit: BoxFit.contain, // Keeps image contained within widget
+                ),
+              ),
+
+
+              RichText(
                 textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Mobi-',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.2,
+                        fontFamily: "Timmana",
+                        fontWeight: FontWeight.w300,
+                        color: Colors.black, // Color for "Mobi"
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Move!',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.2,
+                        fontFamily: "Timmana",
+                        fontWeight: FontWeight.w300,
+                        color: Colors.red, // Color for "Move"
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: screenHeight * 0.05),
 

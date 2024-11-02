@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:provider/provider.dart';
 import '/models/UserProvider.dart'; // 수정된 경로
+import 'camera_screen.dart';
 
 // 35.3 | 35.91
 final String baseUrl = 'http://192.168.35.91:8000/api/v1';
@@ -124,9 +125,30 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
         title: Text("연결 오류"),
         content: Text(message),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text("확인"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼을 좌우로 분리
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => CameraScreen()),
+                  ); // CameraScreen으로 이동 (나가기 버튼)
+                },
+                child: Text("나가기"), // 왼쪽에 위치한 나가기 버튼
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    _remainingTime = 5; // 카운트다운 시간을 5초로 리셋
+                  });
+                  startCountdown(); // 새로운 촬영을 위한 카운트다운 시작
+                },
+                child: Text("재촬영"), // 오른쪽에 위치한 재촬영 버튼
+              ),
+            ],
           ),
         ],
       ),

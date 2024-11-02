@@ -6,8 +6,7 @@ from fastapi_another_jwt_auth.exceptions import AuthJWTException
 import os
 import models
 from database import engine, SessionLocal
-from backend.user import routes as user_routes
-from backend.exercise import routes as exercise_routes
+
 from logger import logger
 import sys
 import dotenv
