@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:matchup/screens/exercise/score_modal.dart';
+// import 'package:matchup/screens/exercise/score_modal.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:camera/camera.dart';
@@ -9,9 +9,9 @@ import 'screens/bottom_navigation_bar.dart';
 import 'models/UserProvider.dart';
 
 // 테스트용 링크
-import 'screens/calendar/calendar_screen.dart';
-import 'screens/exercise/exercise_screen.dart';
-import 'screens/grade/grade_screen.dart';
+//import 'screens/calendar/calendar_screen.dart';
+//import 'screens/exercise/exercise_screen.dart';
+//import 'screens/grade/grade_screen.dart';
 
 List<CameraDescription> cameras = [];
 
