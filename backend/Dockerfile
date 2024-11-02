@@ -8,7 +8,8 @@ COPY . /backend
 WORKDIR /backend
 
 # Python이 백엔드 경로를 기본 경로로 인식도록 환경변수에 추가
-ENV PYTHONPATH=/backend
+# 이전 버전 But,
+# ENV PYTHONPATH=/backend
 
 # pip 업그레이드 및 의존성 설치
 RUN pip install --no-cache-dir --upgrade pip \
