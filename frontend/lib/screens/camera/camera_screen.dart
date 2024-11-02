@@ -56,88 +56,112 @@ class CameraScreen extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Color(0xFFF5F5F5), // 배경색 설정
+      appBar: AppBar(
+        backgroundColor: Color(0xFFD4C6F0), // AppBar 색상 설정
+        elevation: 0,
+        toolbarHeight: screenHeight * 0.1, // AppBar 높이 설정
+        leading: Padding(
+          padding: EdgeInsets.only(left: 16.0), // 여백 조정
+          child: IconButton(
+            icon: Icon(Icons.account_circle, size: screenWidth * 0.08), // 아이콘 크기 조정
+            onPressed: () {
+              // 필요한 경우 여기에 추가 작업 작성
+            },
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.04),
+        padding: EdgeInsets.all(screenWidth * 0.04), // 화면 여백 설정
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center, // 수직 중앙 정렬
+          crossAxisAlignment: CrossAxisAlignment.stretch, // 가로로 최대 공간 사용
           children: <Widget>[
-            // 로고 이미지
-            Image.asset(
-              'lib/assets/images/logo.jpg',
-              height: screenHeight * 0.25,
-              fit: BoxFit.contain,
-            ),
-            Text(
-              'Mobi-Move!',
-              style: TextStyle(
-                fontSize: screenWidth * 0.15,
-                fontFamily: "Timmana",
-                fontWeight: FontWeight.w300,
+            //SizedBox(height: screenHeight * 0.1), // 상단 여백
+            Flexible(
+              child: Image.asset(
+                'lib/assets/images/logo.png',
+                fit: BoxFit.contain, // Keeps image contained within widget
+                width: screenWidth * 0.1, // Adjust width as needed
               ),
-              textAlign: TextAlign.center,
             ),
-            SizedBox(height: screenHeight * 0.08),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: screenWidth * 0.02),
-                    child: ElevatedButton(
-                      child: Text('체형 측정하기'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFBBBBEE),
-                        foregroundColor: Color(0xFF000000),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.08,
-                          vertical: screenHeight * 0.02,
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: screenWidth * 0.04,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(screenWidth * 0.05),
-                        ),
-                      ),
-                      onPressed: () {
-                        sendGetRequest(context);
-                      },
+            // SizedBox(height: screenHeight * 0.03), // 이미지와 텍스트 간격
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Mobi-',
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.2,
+                      fontFamily: "Timmana",
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black, // Color for "Mobi"
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: screenWidth * 0.02),
-                    child: ElevatedButton(
-                      child: Text('갤러리'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFBBBBEE),
-                        foregroundColor: Color(0xFF000000),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.08,
-                          vertical: screenHeight * 0.02,
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: screenWidth * 0.04,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(screenWidth * 0.05),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GalleryScreen()),
-                        );
-                      },
+                  TextSpan(
+                    text: 'Move!',
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.2,
+                      fontFamily: "Timmana",
+                      fontWeight: FontWeight.w300,
+                      color: Colors.red, // Color for "Move"
                     ),
                   ),
+                ],
+              ),
+            ),
+            ElevatedButton( // 체형 측정 버튼
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFD4C6F0), // 버튼 배경색
+                foregroundColor: Colors.black, // 버튼 텍스트 색상
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0), // 둥근 버튼 모양
                 ),
-              ],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BodyScanScreen()), // 버튼 클릭 시 BodyScanScreen으로 이동
+                );
+              },
+              child: SizedBox(
+                width: screenWidth * 0.6, // 버튼 너비
+                child: Center(
+                  child: Text(
+                    '체형 측정하기',
+                    style: TextStyle(fontSize: screenHeight * 0.025),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.015), // 버튼 간격
+            ElevatedButton( // 측정 비교 갤러리 버튼
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFD4C6F0), // 버튼 배경색
+                foregroundColor: Colors.black, // 버튼 텍스트 색상
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0), // 둥근 버튼 모양
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GalleryScreen()), // 버튼 클릭 시 PictureGallery 이동
+                );
+              },
+              child: SizedBox(
+                width: screenWidth * 0.6, // 버튼 너비
+                child: Center(
+                  child: Text(
+                    '측정 비교 갤러리',
+                    style: TextStyle(fontSize: screenHeight * 0.025),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
