@@ -26,16 +26,20 @@ class ApiClient {// 집 35.91 학교 219.100
 
   // 로그인
   Future<String> login(String email, String password) async {
-    var response = await http.post(
-      Uri.parse('$baseUrl/user/login'),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: {'email': email, 'password': password},
-    );
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      return data['access_token'];
-    } else {
-      throw Exception('Login failed: ${response.body}');
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/user/login'),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: {'email': email, 'password': password},
+      );
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        return data['access_token'];
+      } else {
+        throw Exception('Login failed: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Network error: $e');
     }
   }
 

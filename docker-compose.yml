@@ -20,7 +20,11 @@ services:
       - JWT_ALGORITHM=HS256
       - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=3000
       - JWT_REFRESH_TOKEN_EXPIRE_DAYS=5
+
       - PYTHONPATH=/backend  # PYTHONPATH 설정 추가
+
+      - HOST= 0.0.0.0 # 외부 액세스를 허용하도록 0.0.0에 바인딩되는지 확인합니다
+      # 기타 구성
 
     networks:
       - app-network

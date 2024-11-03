@@ -44,7 +44,7 @@ client_s3 = boto3.client(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # 보완강화를 위해서는 ["http://192.168.35.91"] / 그냥 다 받아들이려면 ["*"] : 자꾸 안되니까 그냥 IP 넣어보자
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

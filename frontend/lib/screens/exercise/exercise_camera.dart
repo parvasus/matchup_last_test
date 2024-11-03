@@ -72,7 +72,7 @@ class _ExerciseCameraScreenState extends State<ExerciseCameraScreen> {
   void _connectWebSocket() {
     try {
       _channel = WebSocketChannel.connect(
-        Uri.parse('ws://localhost:8000/api/v1/exercise/ws'),
+        Uri.parse('ws://127.0.0.1:8000/api/v1/exercise/ws'),
       );
 
       // 사용자 인증을 위해 Provider에서 액세스 토큰을 가져옴
