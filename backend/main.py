@@ -5,18 +5,18 @@ from fastapi_another_jwt_auth.exceptions import AuthJWTException
 
 import os
 import models
-from database import engine, SessionLocal
+from backend.database import engine, SessionLocal
 
-from logger import logger
+from backend.logger import logger
 import sys
 import dotenv
 import boto3
 
-from user import routes as user_routes
-from exercise import routes as exercise_routes
-from health import routes as health_routes
-from session import routes as session_routes
-from models import Exercise
+from backend.user import routes as user_routes
+from backend.exercise import routes as exercise_routes
+from backend.health import routes as health_routes
+from backend.session import routes as session_routes
+from backend.models import Exercise
 from exercise.mediapipe.exercise.waist import WaistExercise
 from exercise.mediapipe.exercise.squat import SquatExercise
 from exercise.mediapipe.exercise.leg import LegExercise

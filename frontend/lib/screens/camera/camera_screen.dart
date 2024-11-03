@@ -92,7 +92,7 @@ class CameraScreen extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Mobi-',
+                    text: 'Self-',
                     style: TextStyle(
                       fontSize: screenWidth * 0.2,
                       fontFamily: "Timmana",
@@ -101,7 +101,7 @@ class CameraScreen extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: 'Move!',
+                    text: 'PT!',
                     style: TextStyle(
                       fontSize: screenWidth * 0.2,
                       fontFamily: "Timmana",
